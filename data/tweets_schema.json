@@ -1,0 +1,72 @@
+{
+    "$schema":"http://json-schema.org/draft-07/schema#",
+    "description": "The json schema for an array of tweets",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "integer"
+            },
+            "created_at": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "content": {
+                "type": "string"
+            },
+            "location": {
+                "type": "string"
+            },
+            "tweeted_by": {
+                "$ref": "#/$defs/user"
+            },
+            "retweets": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "retweeted_by": {
+                            "$ref": "#/$defs/user"
+                        },
+                        "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    "required": ["retweeted_by", "created_at"]
+                }
+            },
+            "mentions": {
+                "$ref": "#/$defs/userlist"
+            },
+            "likes": {
+                "$ref": "#/$defs/userlist"
+            }
+        },
+        "required": ["id", "created_at", "content", "tweeted_by"]
+    },
+    "$defs": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                }
+            },
+            "required": ["username"]
+        },
+        "userlist": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/user"
+            }
+        }
+    }
+}
