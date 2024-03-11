@@ -16,10 +16,8 @@ class JSONDocument:
         if len(query) == 0:
             return None
 
-        curs = self.conn.cursor()
-        q = 'strict ' + query
-        
-        curs.execute("select jsonb_path_query(tweets, %s)::json as result from tweets", (q,))
+        curs = self.conn.cursor()        
+        curs.execute("select jsonb_path_query(tweets, %s)::json as result from tweets", (query,))
 
         res = curs.fetchall()
 
